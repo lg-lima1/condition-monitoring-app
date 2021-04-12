@@ -25,7 +25,7 @@ apps:
         restart-condition: always
         plugs: [network-bind, network]
     grafana-server:
-        command: bin/grafana-server --config $SNAP/conf/default.ini --homepath $SNAP
+        command: bin/grafana-server --config $SNAP/conf/custom.ini --homepath $SNAP
         daemon: simple
         restart-condition: always
         plugs: [network-bind, network]
@@ -42,3 +42,9 @@ parts:
             - influxdb-ijohnson/latest/stable
             - grafana/7/stable
             - node-red/latest/stable
+
+    grafana-config:
+        plugin: dump
+        source: ./grafana/
+        organize: 
+            "*.ini" : conf/        

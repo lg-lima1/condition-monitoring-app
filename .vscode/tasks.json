@@ -3,7 +3,7 @@
     "tasks": [
         {
             "label": "Build Release",
-            "command": "snapcraft",
+            "command": "snapcraft && sudo snap install ctrlx-iot_0.1_amd64.snap --devmode --dangerous",
             "type": "shell",
             "problemMatcher": [],
             "group": {
