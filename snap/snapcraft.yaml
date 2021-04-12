@@ -1,0 +1,44 @@
+name: ctrlx-iot
+base: core18
+version: "0.1"
+summary: very cool software
+description: |
+    This is my-snap's description. You have a paragraph or two to tell the
+    most important story about your snap. Keep it under 100 words though,
+    we live in tweetspace and your description wants to look good in the snap
+    store.
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+
+# enable once everything is up and running
+# architectures:
+#   - build-on: [arm64, amd64]
+
+apps:
+    influx:
+        command: bin/influx
+        plugs: [network]
+    influxd:
+        command: bin/influxd
+        daemon: simple
+        restart-condition: always
+        plugs: [network-bind, network]
+    grafana-server:
+        command: bin/grafana-server --config $SNAP/conf/default.ini --homepath $SNAP
+        daemon: simple
+        restart-condition: always
+        plugs: [network-bind, network]
+    node-red:
+        command: bin/startNR
+        daemon: simple
+        restart-condition: always
+        plugs: [network-bind, network]
+
+parts:
+    dependencies:
+        plugin: nil
+        stage-snaps:
+            - influxdb-ijohnson/latest/stable
+            - grafana/7/stable
+            - node-red/latest/stable
