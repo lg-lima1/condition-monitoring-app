@@ -9,7 +9,7 @@ description: |
     store.
 
 grade: devel # must be 'stable' to release into candidate/stable channels
-confinement: devmode # use 'strict' once you have the right plugs and slots
+confinement: devmode
 
 # enable once everything is up and running
 # architectures:
@@ -25,7 +25,7 @@ apps:
         restart-condition: always
         plugs: [network-bind, network]
     grafana-server:
-        command: bin/grafana-server --config $SNAP/conf/custom.ini --homepath $SNAP
+        command: bin/grafana-server --config=$SNAP_DATA/conf/custom.ini --homepath=$SNAP
         daemon: simple
         restart-condition: always
         plugs: [network-bind, network]

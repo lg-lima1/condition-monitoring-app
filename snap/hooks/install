@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+echo "Install hook triggered"
+
+# Check if directory exists
+if [ ! -d "$SNAP_DATA/conf/" ]; then
+    echo "Creating directory at $SNAP_DATA/conf/..."
+    mkdir -p $SNAP_DATA/conf/provisioning/{datasources,notifiers,dashboards}/
+fi
+
+# Copy custom conf file to snap data dir
+cp "$SNAP/conf/custom.ini" "$SNAP_DATA/conf/"
