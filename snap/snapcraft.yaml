@@ -22,17 +22,20 @@ apps:
     influxd:
         command: bin/influxd
         daemon: simple
-        restart-condition: always
+        restart-condition: on-failure
+        restart-delay: 5s
         plugs: [network-bind, network]
     grafana-server:
         command: bin/grafana-server --config=$SNAP_DATA/conf/custom.ini --homepath=$SNAP
         daemon: simple
-        restart-condition: always
+        restart-condition: on-failure
+        restart-delay: 5s
         plugs: [network-bind, network]
     node-red:
         command: bin/startNR
         daemon: simple
-        restart-condition: always
+        restart-condition: on-failure
+        restart-delay: 5s
         plugs: [network-bind, network]
 
 parts:
