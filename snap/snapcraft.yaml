@@ -1,12 +1,10 @@
-name: ctrlx-iot
+name: aio-iot-app
 base: core18
 version: "0.1"
-summary: very cool software
+summary: All-In-One IoT Solution for Condition Monitoring
 description: |
-    This is my-snap's description. You have a paragraph or two to tell the
-    most important story about your snap. Keep it under 100 words though,
-    we live in tweetspace and your description wants to look good in the snap
-    store.
+    Compilation of the best open source IoT software available. NodeRED, InfluxDB and
+    Grafana all together and pre-configured, ready for your needs.
 
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: strict
