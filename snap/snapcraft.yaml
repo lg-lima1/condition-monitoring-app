@@ -49,7 +49,7 @@ parts:
         plugin: nil
         stage-snaps:
             - influxdb-ijohnson/latest/stable
-            - grafana/latest/stable
+            - grafana/21.04/stable
             - node-red/latest/stable
 
     grafana-config:
