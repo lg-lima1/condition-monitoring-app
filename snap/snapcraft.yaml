@@ -9,7 +9,7 @@ description: |
     store.
 
 grade: devel # must be 'stable' to release into candidate/stable channels
-confinement: devmode
+confinement: strict
 
 # enable once everything is up and running
 # architectures:
@@ -20,13 +20,13 @@ apps:
         command: bin/influx
         plugs: [network]
     influxd:
-        command: bin/influxd
+        command: bin/influxd --config=$SNAP_DATA/influxdb/conf/influxdb.conf
         daemon: simple
         restart-condition: on-failure
         restart-delay: 5s
         plugs: [network-bind, network]
     grafana-server:
-        command: bin/grafana-server --config=$SNAP_DATA/conf/custom.ini --homepath=$SNAP
+        command: bin/grafana-server --config=$SNAP_DATA/grafana/conf/defaults.ini --homepath=$SNAP
         daemon: simple
         restart-condition: on-failure
         restart-delay: 5s
@@ -36,7 +36,14 @@ apps:
         daemon: simple
         restart-condition: on-failure
         restart-delay: 5s
-        plugs: [network-bind, network]
+        plugs:
+            - bluez
+            - bluetooth-control
+            - home
+            - network-bind
+            - network
+            - network-observe
+            - removable-media
 
 parts:
     dependencies:
@@ -50,4 +57,10 @@ parts:
         plugin: dump
         source: ./grafana/
         organize: 
-            "*.ini" : conf/        
+            "defaults.ini" : dump/
+
+    influx-config:
+        plugin: dump
+        source: ./influxd/
+        organize: 
+            "influxdb.conf": dump/
