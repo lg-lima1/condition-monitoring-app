@@ -2,14 +2,17 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build Release",
+            "label": "Remote Build",
+            "command": "snapcraft remote-build --launchpad-accept-public-upload",
+            "type": "shell",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Local Build",
             "command": "snapcraft",
             "type": "shell",
-            "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group": "build"
         }
     ]
 }
