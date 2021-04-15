@@ -1,6 +1,6 @@
 name: aio-iot-app
 base: core18
-version: "0.1"
+version: '0.1+git'
 summary: All-In-One IoT Solution for Condition Monitoring
 description: |
     Compilation of the best open source IoT software available. NodeRED, InfluxDB and
@@ -19,13 +19,13 @@ apps:
         command: bin/influx
         plugs: [network]
     influxd:
-        command: bin/influxd --config=$SNAP_DATA/influxdb/conf/influxdb.conf
+        command: bin/influxd --config $SNAP_DATA/influxdb/conf/influxdb.conf
         daemon: simple
         restart-condition: on-failure
         restart-delay: 5s
         plugs: [network-bind, network]
     grafana-server:
-        command: bin/grafana-server --config=$SNAP_DATA/grafana/conf/defaults.ini --homepath=$SNAP
+        command: bin/grafana-server --config $SNAP_DATA/grafana/conf/defaults.ini --homepath $SNAP
         daemon: simple
         restart-condition: on-failure
         restart-delay: 5s
@@ -49,8 +49,9 @@ parts:
         plugin: nil
         stage-snaps:
             - influxdb-ijohnson/latest/stable
-            - grafana/21.04/stable
             - node-red/latest/stable
+            - on amd64: [grafana/latest/stable]
+            - on arm64: [grafana/latest/beta]
 
     grafana-config:
         plugin: dump
