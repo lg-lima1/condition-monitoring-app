@@ -1,6 +1,6 @@
 name: aio-iot-app
 base: core18
-version: 1.0
+version: '1.0'
 summary: All-In-One IoT Solution for Condition Monitoring
 description: |
     Compilation of the best open source IoT software available. NodeRED, InfluxDB and
