@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.boschrexroth.com/ctrlx-automation/ctrlx-core/apps/package-manifest/package-manifest.v1.schema.json",
+  "version": "1.0.0",
+  "id": "aio-iot-app",
+  "services": {
+    "proxyMapping": [
+      {
+        "name": "node-red",
+        "url": "/node-red",
+        "binding": "http://localhost:1880",
+        "options": [
+          {"option": "websocket", "value": ""}
+        ],
+        "restricted": []
+      },
+      {
+        "name": "grafana",
+        "url": "/grafana",
+        "binding": "http://localhost:3000",
+        "options": [
+          {"option": "websocket", "value": ""}
+        ],
+        "restricted": []
+      },
+      {
+        "name": "influxdb",
+        "url": "/influxdb",
+        "binding": "http://localhost:8086",
+        "options": [
+          {"option": "websocket", "value": ""}
+        ],
+        "restricted": []
+      }
+    ]
+  },
+  "menus": {
+    "sidebar": [
+      {
+        "id": "iot-app",
+        "title": "IoT App",
+        "icon": "bosch-ic-automation",
+        "items": [
+          {
+            "id": "node-red-apps",
+            "title": "Node-RED",
+            "items": [
+              {
+                "id": "node-red-admin",
+                "title": "Flows",
+                "link": "/node-red/"
+              },
+              {
+                "id": "node-red-dashboard",
+                "title": "Dashboard",
+                "link": "/node-red/ui"
+              }
+            ]
+          },
+          {
+            "id": "grafana-dashboard",
+            "title": "Grafana Dashboard",
+            "link": "/grafana/"
+          }
+        ]
+      }
+    ],
+    "overview": []
+  }
+}

@@ -1,6 +1,7 @@
 name: aio-iot-app
 base: core18
-version: '1.0'
+version: '1.0.1'
+icon: snap/icons/icon.png
 summary: All-In-One IoT Solution for Condition Monitoring
 description: |
     Compilation of the best open source IoT software available. NodeRED, InfluxDB and
@@ -9,7 +10,6 @@ description: |
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: strict
 
-# enable once everything is up and running
 architectures:
   - build-on: amd64
   - build-on: arm64
@@ -42,7 +42,7 @@ apps:
             - network-bind
             - network
             - network-observe
-            - removable-media
+            - serial-port
 
 parts:
     dependencies:
@@ -52,15 +52,39 @@ parts:
             - node-red/latest/stable
             - on amd64: [grafana/latest/stable]
             - on arm64: [grafana/latest/beta]
+        override-prime: |
+            npm install node-red-contrib-influxdb
+            npm install node-red-contrib-ctrlx-automation
+            snapcraftctl prime
 
     grafana-config:
         plugin: dump
-        source: ./grafana/
+        source: ./grafana
         organize: 
             "defaults.ini" : dump/
 
     influx-config:
         plugin: dump
-        source: ./influxd/
+        source: ./influxd
         organize: 
             "influxdb.conf": dump/
+
+    ctrlx-config:
+        plugin: dump
+        source: ./configs
+        organize: 
+            'package-assets/*': package-assets/$SNAP_NAME/
+
+slots:
+    package-assets:
+        content: package-assets
+        interface: content
+        source:
+            read:
+            - $SNAP/package-assets/$SNAP_NAME
+
+plugs:
+  active-solution:
+    content: solutions
+    interface: content
+    target: $SNAP_COMMON/solutions
