@@ -1,6 +1,6 @@
 name: aio-iot-app
 base: core18
-version: '1.0.1'
+version: '1.0.2'
 icon: snap/icons/icon.png
 summary: All-In-One IoT Solution for Condition Monitoring
 description: |
@@ -53,8 +53,7 @@ parts:
             - on amd64: [grafana/latest/stable]
             - on arm64: [grafana/latest/beta]
         override-prime: |
-            npm install node-red-contrib-influxdb
-            npm install node-red-contrib-ctrlx-automation
+            npm install node-red-contrib-influxdb node-red-contrib-ctrlx-automation node-red-dashboard
             snapcraftctl prime
 
     grafana-config:
@@ -73,15 +72,15 @@ parts:
         plugin: dump
         source: ./configs
         organize: 
-            'package-assets/*': package-assets/$SNAP_NAME/
+            'package-assets/*': package-assets/aio-iot-app/ 
 
 slots:
     package-assets:
-        content: package-assets
         interface: content
+        content: package-assets
         source:
             read:
-            - $SNAP/package-assets/$SNAP_NAME
+            - $SNAP/package-assets/aio-iot-app
 
 plugs:
   active-solution:
