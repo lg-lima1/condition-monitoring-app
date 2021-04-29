@@ -17,10 +17,9 @@ architectures:
 
 apps:
     create-db:
-        command: bin/influx -execute "CREATE DATABASE db WITH DURATION 40d REPLICATION 1 NAME forty_days"
+        command: bin/scripts/create-db
         plugs: [network, home]
         daemon: simple
-        restart-condition: never
     influx:
         command: bin/influx
         plugs: [network, home]
@@ -30,8 +29,6 @@ apps:
         restart-condition: on-failure
         restart-delay: 5s
         plugs: [network-bind, network]
-        after:
-          - create-db
     grafana-server:
         command: bin/grafana-server --config $SNAP_DATA/grafana/conf/defaults.ini --homepath $SNAP
         daemon: simple
@@ -68,19 +65,25 @@ parts:
         plugin: dump
         source: ./grafana
         organize: 
-            "defaults.ini" : dump/
+            "*" : dump/
 
     influx-config:
         plugin: dump
         source: ./influxd
         organize: 
-            "influxdb.conf": dump/
+            "*": dump/
 
-    ctrlx-config:
+    package-assets:
         plugin: dump
-        source: ./configs
+        source: ./package-assets
         organize: 
-            'package-assets/*': package-assets/aio-iot-app/
+            '*': package-assets/aio-iot-app/
+
+    shell-scripts:
+        plugin: dump
+        source: ./scripts
+        organize:
+            '*': bin/scripts/
 
 slots:
     package-assets:
