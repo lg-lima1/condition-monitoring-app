@@ -10,7 +10,7 @@
         },
         {
             "label": "Local Build",
-            "command": "snapcraft; snapcraft clean",
+            "command": "snapcraft",
             "type": "shell",
             "group": "build",
             "problemMatcher": []
