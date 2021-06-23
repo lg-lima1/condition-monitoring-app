@@ -1,12 +1,12 @@
 name: aio-iot-app
 base: core18
-version: '1.1.0'
+version: '1.1.1'
 icon: snap/icons/icon.png
 summary: All-In-One IoT Software Solution for Condition Monitoring
 description: |
     The best open source IoT software available, bundled together as a single snap.
     NodeRED, InfluxDB and Grafana all together and pre-configured, ready to use together
-    with the whole ctrlX Ecosystem.
+    with the whole ctrlX Automation ecosystem.
 
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: strict
@@ -20,21 +20,25 @@ apps:
         command: bin/scripts/create-db
         plugs: [network, home]
         daemon: simple
+        
     influx:
         command: bin/influx
         plugs: [network, home]
+
     influxd:
         command: bin/influxd --config $SNAP_DATA/influxdb/conf/influxdb.conf
         daemon: simple
         restart-condition: on-failure
         restart-delay: 5s
         plugs: [network-bind, network]
+
     grafana-server:
         command: bin/grafana-server --config $SNAP_DATA/grafana/conf/defaults.ini --homepath $SNAP
         daemon: simple
         restart-condition: on-failure
         restart-delay: 5s
         plugs: [network-bind, network]
+
     node-red:
         command: bin/startNR
         daemon: simple
@@ -77,13 +81,13 @@ parts:
         plugin: dump
         source: ./package-assets
         organize: 
-            '*': package-assets/aio-iot-app/
+            "*": package-assets/aio-iot-app/
 
     shell-scripts:
         plugin: dump
         source: ./scripts
         organize:
-            '*': bin/scripts/
+            "*": bin/scripts/
 
 slots:
     package-assets:

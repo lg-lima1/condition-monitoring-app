@@ -5,24 +5,24 @@
   "menus": {
     "sidebar": [
       {
-        "id": "iot-app",
+        "id": "aio-iot-app-sidebar",
         "title": "IoT",
         "icon": "bosch-ic-automation",
         "items": [
           {
             "id": "node-red-admin",
             "title": "Node-RED Flows",
-            "link": "http://localhost:1880/"
+            "link": "http://${hostname}:1880/"
           },
           {
             "id": "node-red-dashboard",
             "title": "Node-RED Dashboard",
-            "link": "http://localhost:1880/ui"
+            "link": "http://${hostname}:1880/ui"
           },
           {
             "id": "grafana-dashboard",
             "title": "Grafana Dashboard",
-            "link": "http://localhost:3000/"
+            "link": "http://${hostname}:3000/"
           }
         ]
       }
