@@ -1,6 +1,6 @@
 name: aio-iot-app
 base: core18
-version: '1.1.1'
+version: '1.2.0'
 icon: snap/icons/icon.png
 summary: All-In-One IoT Software Solution for Condition Monitoring
 description: |
@@ -8,7 +8,7 @@ description: |
     NodeRED, InfluxDB and Grafana all together and pre-configured, ready to use together
     with the whole ctrlX Automation ecosystem.
 
-grade: devel # must be 'stable' to release into candidate/stable channels
+grade: stable
 confinement: strict
 
 architectures:
@@ -51,7 +51,6 @@ apps:
             - network-bind
             - network
             - network-observe
-            - serial-port
 
 parts:
     dependencies:
@@ -62,7 +61,7 @@ parts:
             - on amd64: [grafana/latest/stable]
             - on arm64: [grafana/latest/beta]
         override-prime: |
-            npm install node-red-contrib-influxdb node-red-contrib-ctrlx-automation node-red-dashboard
+            npm install node-gyp node-red-contrib-influxdb node-red-contrib-ctrlx-automation node-red-dashboard node-red-contrib-modbus node-red-contrib-s7 node-red-contrib-opcua
             snapcraftctl prime
 
     grafana-config:
