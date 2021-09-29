@@ -8,7 +8,7 @@ description: |
     NodeRED, InfluxDB and Grafana all together and pre-configured, ready to use together
     with the whole ctrlX Automation ecosystem.
 
-grade: devel
+grade: stable
 confinement: strict
 
 architectures:
