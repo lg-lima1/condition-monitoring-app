@@ -1,1 +1,1 @@
-# aio-iot-app
+<iframe src="https://snapcraft.io/aio-iot-app/embedded?button=black&channels=true&summary=true" frameborder="0" width="100%" height="390px" style="border: 1px solid #CCC; border-radius: 2px;"></iframe>
