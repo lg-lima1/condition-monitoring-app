@@ -1,14 +1,14 @@
 name: aio-iot-app
 base: core18
 version: '1.2.0'
-icon: snap/icons/icon.png
+icon: snap/local/icon.png
 summary: All-In-One IoT Software Solution for Condition Monitoring
 description: |
     The best open source IoT software available, bundled together as a single snap.
     NodeRED, InfluxDB and Grafana all together and pre-configured, ready to use together
     with the whole ctrlX Automation ecosystem.
 
-grade: stable
+grade: devel
 confinement: strict
 
 architectures:
