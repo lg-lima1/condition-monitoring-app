@@ -44,12 +44,7 @@ CREATE USER admin WITH PASSWORD '<password>' WITH ALL PRIVILEGES
 CREATE USER <username> WITH PASSWORD '<password>' WITH '[READ, WRITE, ALL]' PRIVILEGES
 ```
 
-If you try to insert a value to the `db` database before configuring users, the following error will pop up.
-```
-Error: A 404 Not Found error occurred: {"error":"database not found: \"db\""}
-```
-
-And if you do not set the user correctly, the following error will pop up. Keep in mind that after creating the user, you need to update the influx node credentials inside Node RED.
+If you try to insert a value to a database before configuring users, or, if you do not set the admin user correctly, the following error will pop up. Keep in mind that after creating the user, you need to update the influx node credentials inside Node RED.
 ```
 ERR: error authorizing query: create admin user first or disable authentication
 Warning: It is possible this error is due to not setting a database.Please set a database with the command "use <database>".
