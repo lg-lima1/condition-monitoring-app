@@ -1,9 +1,0 @@
-#!/bin/sh -e
-
-echo "Create database script triggered..."
-
-sleep 45s
-
-$SNAP/bin/influx -execute "CREATE DATABASE db WITH DURATION 40d REPLICATION 1 NAME forty_days"
-
-echo "Create database script finished"
