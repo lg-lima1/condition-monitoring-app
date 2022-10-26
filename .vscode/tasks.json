@@ -2,18 +2,36 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Remote Build",
-            "command": "snapcraft remote-build --launchpad-accept-public-upload",
+            "label": "Build: all",
             "type": "shell",
-            "group": "build",
-            "problemMatcher": []
+            "command": "",
+            "dependsOrder": "sequence",
+            "dependsOn":[
+                "Build: amd64",
+                "Build: arm64"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
         },
         {
-            "label": "Local Build",
-            "command": "snapcraft",
+            "label": "Build: amd64",
             "type": "shell",
-            "group": "build",
-            "problemMatcher": []
+            "command": "./build-amd64.sh",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Build: arm64",
+            "type": "shell",
+            "command": "./build-arm64.sh",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
         }
-    ]
+    ],
 }
