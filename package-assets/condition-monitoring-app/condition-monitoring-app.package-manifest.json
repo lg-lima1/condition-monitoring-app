@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.boschrexroth.com/ctrlx-automation/ctrlx-core/apps/package-manifest/package-manifest.v1.1.schema.json",
+  "version": "1.0.0",
+  "id": "cm-iot-app",
+  "configuration": {
+      "appDirectories": [
+          {
+              "name": "condition-monitoring-app",
+              "description": "Condition Monitoring IoT App",
+              "icon": "bosch-ic-directory",
+              "scopes": [],
+              "copyOnLoad": true
+          }
+      ]
+  },
+  "services": {
+    "proxyMapping": [
+      {
+        "name": "node-red.web",
+        "url": "/node-red",
+        "binding": ":1880",
+        "options": [
+          {
+            "option": "websocket",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "name": "grafana.web",
+        "url": "/grafana",
+        "binding": ":3000",
+        "options": [
+          {
+            "option": "websocket",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  },
+  "menus": {
+    "overview": [
+      {
+        "id": "grafana-dashboard",
+        "title": "Grafana Dashboard",
+        "icon": "bosch-ic-automation",
+        "link": "/grafana",
+        "target": "grafana-dashboard",
+        "permissions": []
+      }
+    ],
+    "sidebar": [
+      {
+        "id": "cm-iot-app-sidebar",
+        "title": "IoT Apps",
+        "icon": "bosch-ic-automation",
+        "items": [
+          {
+            "id": "node-red-admin",
+            "title": "Node-RED Flow Editor",
+            "link": "/node-red",
+            "target": "node-red-admin",
+            "permissions": []
+          },
+          {
+            "id": "node-red-dashboard",
+            "title": "Node-RED Dashboard",
+            "link": "/node-red/ui",
+            "target": "node-red-dashboard",
+            "permissions": []
+          },
+          {
+            "id": "grafana-dashboard",
+            "title": "Grafana Dashboard",
+            "link": "/grafana",
+            "target": "grafana-dashboard",
+            "permissions": []
+          }
+        ]
+      }
+    ]
+  }
+}
