@@ -1,10 +1,9 @@
-name: aio-iot-app
-base: core18
-version: '1.2.0'
-icon: snap/local/icon.png
-summary: All-In-One IoT Software Solution for Condition Monitoring
+name: condition-monitoring-app
+base: core20
+version: "1.3.0"
+summary: IoT Machine Condition Monitoring App
 description: |
-    The best open source IoT software available, bundled together as a single snap.
+    This app includes several IoT softwares bundled as a single snap.
     NodeRED, InfluxDB and Grafana all together and pre-configured, ready to use together
     with the whole ctrlX Automation ecosystem.
 
@@ -12,8 +11,8 @@ grade: stable
 confinement: strict
 
 architectures:
-  - build-on: amd64
-  - build-on: arm64
+    - build-on: amd64
+    - build-on: arm64
 
 apps:
     create-db:
