@@ -14,12 +14,28 @@ architectures:
     - build-on: amd64
     - build-on: arm64
 
-apps:
-    create-db:
-        command: bin/scripts/create-db
-        plugs: [network, home]
-        daemon: simple
-        
+slots:
+    package-assets:
+        interface: content
+        content: package-assets
+        source:
+            read:
+                - $SNAP/package-assets/condition-monitoring-app
+
+plugs:
+    active-solution:
+        interface: content
+        content: solutions
+        target: $SNAP_COMMON/solutions
+
+    datalayer:
+        interface: content
+        content: datalayer
+        target: $SNAP_DATA/.datalayer
+
+hooks:
+    connect-plug-active-solution:
+        plugs: [active-solution]
     influx:
         command: bin/influx
         plugs: [network, home]
@@ -78,25 +94,5 @@ parts:
     package-assets:
         plugin: dump
         source: ./package-assets
-        organize: 
-            "*": package-assets/aio-iot-app/
-
-    shell-scripts:
-        plugin: dump
-        source: ./scripts
         organize:
-            "*": bin/scripts/
-
-slots:
-    package-assets:
-        interface: content
-        content: package-assets
-        source:
-            read:
-            - $SNAP/package-assets/aio-iot-app
-
-plugs:
-  active-solution:
-    content: solutions
-    interface: content
-    target: $SNAP_COMMON/solutions
+            "*": package-assets/ 

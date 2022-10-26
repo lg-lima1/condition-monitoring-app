@@ -2,29 +2,11 @@
 
 echo "Install hook triggered"
 
-
-
 # Check if directory exists
-if [ ! -d "$SNAP_DATA/grafana/" ]; then
-    echo "Creating directory at $SNAP_DATA/grafana/..."
-    mkdir -p $SNAP_DATA/grafana/conf/provisioning/datasources
-    mkdir -p $SNAP_DATA/grafana/conf/provisioning/notifiers
-    mkdir -p $SNAP_DATA/grafana/conf/provisioning/dashboards
+if [ ! -d "$SNAP_COMMON/influxdb/" ]; then
+    echo "Creating directory at $SNAP_COMMON/influxdb/..."
+    mkdir -p $SNAP_COMMON/influxdb/conf
+    mkdir -p $SNAP_COMMON/influxdb/meta
+    mkdir -p $SNAP_COMMON/influxdb/data
+    mkdir -p $SNAP_COMMON/influxdb/wal
 fi
-
-# Copy custom conf file to snap data dir
-cp "$SNAP/dump/defaults.ini" "$SNAP_DATA/grafana/conf/"
-
-
-
-# Check if directory exists
-if [ ! -d "$SNAP_DATA/influxdb/" ]; then
-    echo "Creating directory at $SNAP_DATA/influxdb/..."
-    mkdir -p $SNAP_DATA/influxdb/conf
-    mkdir -p $SNAP_DATA/influxdb/meta
-    mkdir -p $SNAP_DATA/influxdb/data
-    mkdir -p $SNAP_DATA/influxdb/wal
-fi
-
-# Copy custom conf file to snap data dir
-cp "$SNAP/dump/influxdb.conf" "$SNAP_DATA/influxdb/conf/"

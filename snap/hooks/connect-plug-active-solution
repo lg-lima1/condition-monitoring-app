@@ -1,0 +1,26 @@
+#!/bin/sh -e
+
+# Copies Node-RED configuration file 'settings.js' into current 'Active Configuration'
+
+NODERED_DIR=$SNAP_COMMON/solutions/activeConfiguration/condition-monitoring-app/node-red
+
+if [ ! -d "$NODERED_DIR" ]; then 
+   echo "Creating directory at $NODERED_DIR"
+   mkdir -p $NODERED_DIR
+fi
+
+cp $SNAP/config/node-red.conf $NODERED_DIR/settings.js
+chmod 666 $NODERED_DIR/settings.js
+
+
+# Copies InfluxDB configuration file 'influxdb.conf' into current 'Active Configuration'
+
+INFLUXDB_DIR=$SNAP_COMMON/solutions/activeConfiguration/condition-monitoring-app/influxdb
+
+if [ ! -d "$INFLUXDB_DIR" ]; then 
+   echo "Creating directory at $INFLUXDB_DIR"
+   mkdir -p $INFLUXDB_DIR
+fi
+
+cp $SNAP/config/influxdb.conf $INFLUXDB_DIR/influxdb.conf
+chmod 666 $INFLUXDB_DIR/influxdb.conf
