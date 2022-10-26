@@ -12,4 +12,4 @@ fi
 
 echo "Starting InfluxDB app. Port: $PORT. Settings: $SETTINGS."
 
-$SNAP/bin/influxd --config $SETTINGS
+$SNAP/usr/bin/influxd --config $SETTINGS

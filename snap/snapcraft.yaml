@@ -39,7 +39,7 @@ hooks:
 
 apps:
     influx:
-        command: bin/influx
+        command: usr/bin/influx
         plugs:
             - network
             - home
@@ -86,16 +86,28 @@ apps:
             - package-assets
 
 parts:
-    dependencies:
+    node-red:
         plugin: nil
         stage-snaps:
-            - influxdb-ijohnson/latest/stable
             - node-red/latest/stable
-            - on amd64: [grafana/latest/stable]
-            - on arm64: [grafana/latest/beta]
         override-prime: |
-            npm install node-red-contrib-influxdb node-red-contrib-ctrlx-automation node-red-dashboard node-red-contrib-opcua
+            npm install node-red-dashboard 
+            npm install node-red-contrib-influxdb 
+            npm install node-red-contrib-ctrlx-automation
+            npm install node-red-contrib-modbus
+            npm install node-red-debugger
+
+            npm install nrlint
+            mkdir -p $SNAPCRAFT_PRIME/lib
+            npx nrlint --init > $SNAPCRAFT_PRIME/lib/.nrlintrc.js
+
             snapcraftctl prime
+
+    influxdb:
+        plugin: dump
+        source:
+         - on amd64: https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb
+         - on arm64: https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_arm64.deb
 
     dump-config:
         plugin: dump
