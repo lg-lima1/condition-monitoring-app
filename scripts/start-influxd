@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+if [ -z "$PORT" ]; then PORT=8086; fi
+export PORT
+
+# configuration file search hierarchy: Active Configuration -> $SNAP_DATA -> $SNAP
+if [ -f $SNAP_COMMON/solutions/activeConfiguration/condition-monitoring-app/influxdb/influxdb.conf ]; then
+    SETTINGS=$SNAP_COMMON/solutions/activeConfiguration/condition-monitoring-app/influxdb/influxdb.conf
+else
+    SETTINGS=$SNAP/config/influxdb.conf
+fi
+
+echo "Starting InfluxDB app. Port: $PORT. Settings: $SETTINGS."
+
+$SNAP/bin/influxd --config $SETTINGS

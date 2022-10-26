@@ -1,0 +1,17 @@
+#!/bin/sh -e
+
+if [ -z "$PORT" ]; then PORT=1880; fi
+export PORT
+
+# settings.js search hierarchy: Active Configuration -> $SNAP
+if [ -f $SNAP_COMMON/solutions/activeConfiguration/condition-monitoring-app/node-red/settings.js ]; then
+    SETTINGS=$SNAP_COMMON/solutions/activeConfiguration/condition-monitoring-app/node-red/settings.js
+else
+    SETTINGS=$SNAP/config/node-red.conf
+fi
+
+USERDIR=$SNAP_COMMON/solutions/activeConfiguration/condition-monitoring-app/node-red
+
+echo "Starting Node-RED app. Port: $PORT. Settings: $SETTINGS. UserDir: $USERDIR."
+
+$SNAP/bin/node $SNAP/lib/node_modules/.bin/node-red -s $SETTINGS -u $USERDIR

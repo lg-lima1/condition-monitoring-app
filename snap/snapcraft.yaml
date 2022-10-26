@@ -36,16 +36,27 @@ plugs:
 hooks:
     connect-plug-active-solution:
         plugs: [active-solution]
+
+apps:
     influx:
         command: bin/influx
-        plugs: [network, home]
+        plugs:
+            - network
+            - home
+        slots:
+            - package-assets
 
     influxd:
-        command: bin/influxd --config $SNAP_DATA/influxdb/conf/influxdb.conf
+        command: bin/start-influxd
         daemon: simple
-        restart-condition: on-failure
-        restart-delay: 5s
-        plugs: [network-bind, network]
+        restart-condition: always
+        restart-delay: 15s
+        plugs:
+            - network
+            - network-bind
+            - active-solution
+        slots:
+            - package-assets
 
     grafana-server:
         command: bin/grafana-server --config $SNAP_DATA/grafana/conf/defaults.ini --homepath $SNAP
@@ -55,17 +66,24 @@ hooks:
         plugs: [network-bind, network]
 
     node-red:
-        command: bin/startNR
+        command: bin/start-node-red
         daemon: simple
-        restart-condition: on-failure
-        restart-delay: 5s
+        restart-condition: always
+        restart-delay: 15s
         plugs:
+            - audio-playback
             - bluez
             - bluetooth-control
-            - home
+            - camera
             - network-bind
             - network
             - network-observe
+            - pulseaudio
+            - serial-port
+            - removable-media
+            - active-solution
+        slots:
+            - package-assets
 
 parts:
     dependencies:
@@ -79,20 +97,20 @@ parts:
             npm install node-red-contrib-influxdb node-red-contrib-ctrlx-automation node-red-dashboard node-red-contrib-opcua
             snapcraftctl prime
 
-    grafana-config:
+    dump-config:
         plugin: dump
-        source: ./grafana
-        organize: 
-            "*" : dump/
+        source: ./config
+        organize:
+            "*": config/
 
-    influx-config:
+    dump-scripts:
         plugin: dump
-        source: ./influxd
-        organize: 
-            "*": dump/
+        source: ./scripts
+        organize:
+            "*": bin/
 
     package-assets:
         plugin: dump
         source: ./package-assets
         organize:
-            "*": package-assets/ 
+            "*": package-assets/
