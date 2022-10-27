@@ -24,3 +24,17 @@ fi
 
 cp $SNAP/config/influxdb.conf $INFLUXDB_DIR/influxdb.conf
 chmod 666 $INFLUXDB_DIR/influxdb.conf
+
+
+# Copies Grafana configuration file 'grafana.conf' into current 'Active Configuration'
+
+GRAFANA_DIR=$SNAP_COMMON/solutions/activeConfiguration/condition-monitoring-app/grafana
+
+if [ ! -d "$GRAFANA_DIR" ]; then 
+   echo "Creating directory at $GRAFANA_DIR"
+   mkdir -p $GRAFANA_DIR
+   cp -r $SNAP/usr/share/grafana/ $GRAFANA_DIR/../
+fi
+
+cp -f $SNAP/config/grafana.conf $GRAFANA_DIR/conf/defaults.ini
+chmod 666 $GRAFANA_DIR/conf/defaults.ini

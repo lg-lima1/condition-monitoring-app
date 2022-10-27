@@ -1,0 +1,17 @@
+#!/bin/sh -e
+
+if [ -z "$PORT" ]; then PORT=3000; fi
+export PORT
+
+# Configuration file search hierarchy: Active Configuration -> $SNAP
+if [ -f $SNAP_COMMON/solutions/activeConfiguration/condition-monitoring-app/grafana/conf/defaults.ini ]; then
+    SETTINGS=$SNAP_COMMON/solutions/activeConfiguration/condition-monitoring-app/grafana/conf/defaults.ini
+else
+    SETTINGS=$SNAP/config/grafana.conf
+fi
+
+USERDIR=$SNAP_COMMON/solutions/activeConfiguration/condition-monitoring-app/grafana
+
+echo "Starting Grafana app. Port: $PORT. Settings: $SETTINGS. UserDir: $USERDIR."
+
+$SNAP/usr/sbin/grafana-server -homepath $USERDIR -config $SETTINGS web
