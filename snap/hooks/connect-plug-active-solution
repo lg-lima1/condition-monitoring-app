@@ -6,12 +6,14 @@ NODERED_DIR=$SNAP_COMMON/solutions/activeConfiguration/condition-monitoring-app/
 
 if [ ! -d "$NODERED_DIR" ]; then 
    echo "Creating directory at $NODERED_DIR"
-   mkdir -p $NODERED_DIR
+   mkdir -p $NODERED_DIR/lib/flows
 fi
 
 cp $SNAP/config/node-red.conf $NODERED_DIR/settings.js
 chmod 666 $NODERED_DIR/settings.js
 
+cp $SNAP/config/influx-db-management.json $NODERED_DIR/lib/flows
+chmod 666 $NODERED_DIR/lib/flows/influx-db-management.json
 
 # Copies InfluxDB configuration file 'influxdb.conf' into current 'Active Configuration'
 
