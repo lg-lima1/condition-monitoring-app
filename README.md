@@ -3,7 +3,7 @@ This is a `Rexroth unofficial app` for the ctrlX Automation platform. If you are
 
 This app is a bundle of [Node RED](https://nodered.org/), [InfluxDB](https://www.influxdata.com/) and [Grafana](https://grafana.com/). The main objective of this app is to give users a simpler and a faster way to create a condition monitoring solution.
 
-Currently in version `1.3.0`, we bundle the following software versions:
+Currently in version `1.3.1`, we bundle the following software versions:
 
 ```yaml
 - node-red  v3.0.2
@@ -11,7 +11,7 @@ Currently in version `1.3.0`, we bundle the following software versions:
 - grafana   v9.2.2
 ```
 
-And these are the flows preinstalled on `Node RED`:
+And these are the nodes pre-installed on `Node RED`:
 ```yaml
 - node-red-dashboard 
 - node-red-contrib-influxdb 
@@ -19,6 +19,7 @@ And these are the flows preinstalled on `Node RED`:
 - node-red-contrib-modbus
 - node-red-debugger
 ```
+
 # Installation
 Within the apps installation page. Go to settings.
 <img src="docs/goto-settings.png" alt="Go to Settings" width="600" />
@@ -28,6 +29,9 @@ As this app is not official for `Bosch Rexroth`, you need to allow installation 
 
 After a successful installation, you will see an IoT Apps menu entry on the left side of your screen.
 <img src="docs/menu-integration.png" alt="ctrlX OS Menu Integration" width="300" />
+
+## NodeRED Admin User
+As of `v1.3.0`, Admin authentication mecanism is enabled. The app ships with default `boschrexroth` as user and password, but it is required for the user to change it right after installing. Please, refer to the [NodeRED official documentation](https://nodered.org/docs/user-guide/runtime/securing-node-red#usernamepassword-based-authentication) on how to set up your own user and password.
 
 ## Influx Authentication
 As of `v1.3.0`, InfluxDB HTTP authentication mecanism is enabled. This means that, right after installing the app, it is required to create an admin user to manage your database instance. Refer to [Influx official documentation](https://docs.influxdata.com/influxdb/v1.8/administration/authentication_and_authorization/#user-management-commands) on how to manage users.
