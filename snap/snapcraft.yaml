@@ -1,6 +1,6 @@
 name: condition-monitoring-app
 base: core20
-version: "1.3.0"
+version: "1.3.1"
 summary: IoT Machine Condition Monitoring App
 description: |
     This app includes several IoT softwares bundled as a single snap.
@@ -91,22 +91,61 @@ apps:
             - package-assets
 
 parts:
+    node:
+        after: [node-red]
+        plugin: dump
+        source:
+            - to amd64: https://nodejs.org/dist/v16.18.0/node-v16.18.0-linux-x64.tar.gz
+            - to arm64: https://nodejs.org/dist/v16.18.0/node-v16.18.0-linux-arm64.tar.gz
+
     node-red:
         plugin: nil
-        stage-snaps:
-            - node-red/latest/stable
-        override-prime: |
-            npm install node-red-dashboard 
-            npm install node-red-contrib-influxdb 
-            npm install node-red-contrib-ctrlx-automation
-            npm install node-red-contrib-modbus
-            npm install node-red-debugger
+        build-packages:
+          - libatomic1
+          - nodejs
+        override-build: | # Whatever steps needed to install node-red into the install folder, which gets incorporated into the snap
+            npm_args="--prefix $SNAPCRAFT_PART_INSTALL/lib --only=prod --production --no-fund --no-audit"
 
-            npm install nrlint
-            mkdir -p $SNAPCRAFT_PRIME/lib
-            npx nrlint --init > $SNAPCRAFT_PRIME/lib/.nrlintrc.js
+            npm config set unsafe-perm true
+            npm cache verify
 
-            snapcraftctl prime
+            npm $npm_args install node-red
+
+            npm $npm_args install node-red-debugger
+            npm $npm_args install nrlint
+            npx nrlint --init > $SNAPCRAFT_PART_INSTALL/lib/.nrlintrc.js
+
+            npm $npm_args install node-red-node-ping
+            npm $npm_args install node-red-node-random
+            npm $npm_args install node-red-node-serialport            
+            npm $npm_args install node-red-dashboard 
+            npm $npm_args install node-red-contrib-influxdb 
+            npm $npm_args install node-red-contrib-ctrlx-automation
+            npm $npm_args install node-red-contrib-modbus
+
+            find $SNAPCRAFT_PART_INSTALL -type f -name '*.js.swp' -delete
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -name test -prune -exec rm -rf {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -name doc -prune -exec rm -rf {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -name example -prune -exec rm -rf {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -name sample -prune -exec rm -rf {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -iname benchmark* -prune -exec rm -rf {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -iname .nyc_output -prune -exec rm -rf {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -iname unpacked -prune -exec rm -rf {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -name man* -prune -exec rm -rf {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -name tst -prune -exec rm -rf {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -iname demo -prune -exec rm -rf {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type f -name bench.gnu -exec rm -f {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type f -name .npmignore -exec rm -f {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type f -name .travis.yml -exec rm -f {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type f -name .jshintrc -exec rm -f {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type f -iname README.md -exec rm -f {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type f -iname HISTORY.md -exec rm -f {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type f -iname CONTRIBUTING.md -exec rm -f {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type f -iname CHANGE*.md -exec rm -f {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type f -iname .gitmodules -exec rm -f {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type f -iname .gitattributes -exec rm -f {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type f -iname .gitignore -exec rm -f {} \;
+            find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type f -iname "*~" -exec rm -f {} \;
 
     influxdb:
         plugin: dump
