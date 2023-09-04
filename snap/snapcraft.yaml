@@ -89,6 +89,18 @@ apps:
         slots:
             - package-assets
 
+    ntfy2grafana:
+        command: bin/grafana-ntfy -ntfy-url https://ntfy.sh/ctrlx-iot-handson -port 5172
+        daemon: simple
+        restart-condition: always
+        restart-delay: 15s
+        plugs:
+            - network
+            - network-bind
+            - active-solution
+        slots:
+            - package-assets
+
 parts:
     node:
         after: [node-red]
@@ -175,3 +187,22 @@ parts:
         source: ./package-assets
         organize:
             "*": package-assets/
+
+    ntfy2grafana:
+        source: https://github.com/academo/grafana-alerting-ntfy-webhook-integration.git
+        plugin: go
+        override-build: |
+            case $SNAPCRAFT_ARCH_TRIPLET in
+                aarch64-linux-gnu)
+                    export GOARCH=arm64
+                    export GOARM=7
+                    export CGO_ENABLED=0
+                    GO111MODULE=on
+                    ;;
+                amd64)
+                    export GOARCH=amd64
+                    ;;
+            esac
+            go build -buildvcs=false -o ../install/bin/ ./...
+        organize:
+            "bin/pkg": bin/grafana-ntfy
