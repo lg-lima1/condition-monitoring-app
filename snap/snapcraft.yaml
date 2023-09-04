@@ -103,7 +103,7 @@ parts:
           - libatomic1
           - nodejs
         override-build: | # Whatever steps needed to install node-red into the install folder, which gets incorporated into the snap
-            npm_args="--prefix $SNAPCRAFT_PART_INSTALL/lib --only=prod --production --no-fund --no-audit"
+            npm_args="--prefix $SNAPCRAFT_PART_INSTALL/lib --omit=dev --no-fund --no-audit"
 
             npm config set unsafe-perm true
             npm cache verify
