@@ -42,7 +42,6 @@ apps:
         command: usr/bin/influx
         plugs:
             - network
-            - home
         slots:
             - package-assets
 
